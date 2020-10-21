@@ -56,14 +56,14 @@ public class EmployeesIndexServlet extends HttpServlet {
         request.setAttribute("page", page);
 
         //flushの値がnullじゃないなら
-        /*
+
         if(request.getSession().getAttribute("flush") != null){
             //リクエストスコープに入れる
             request.setAttribute("flush", request.getSession().getAttribute("flush"));
             //セッションスコープからは消す
             request.getSession().removeAttribute("flush");
         }
-        */
+
 
         RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/employees/index.jsp");
         rd.forward(request, response);
