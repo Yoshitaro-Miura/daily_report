@@ -8,22 +8,28 @@ import javax.persistence.EntityManager;
 import models.Employee;
 import utils.DButil;
 
+//社員番号、氏名、パスワードの必須入力チェック
 public class EmployeeValidator {
 
+    //validatorメソッドの定義。戻り値はエラーリスト
     public static List<String> validate(Employee e, Boolean code_duplicate_check_flag, Boolean password_check_flag){
 
+        //エラーリストの宣言
         List<String> errors = new ArrayList<String>();
 
+        //社員番号入力エラーの格納
         String code_error = _validateCode(e.getCode(), code_duplicate_check_flag);
         if(!code_error.equals("")){
             errors.add(code_error);
         }
 
+        //氏名エラー
         String name_error = _validateName(e.getName());
         if(!name_error.equals("")){
             errors.add(name_error);
         }
 
+        //パスワードエラー
         String password_error = _validataPassword(e.getPassword(), password_check_flag);
         if(!password_error.equals("")){
             errors.add(password_error);
