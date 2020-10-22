@@ -18,8 +18,13 @@ public class EmployeeValidator {
         List<String> errors = new ArrayList<String>();
 
         //社員番号入力エラーの格納
+
+        //validatCodeメソッドの呼び出し ★e.getCode()でいいのか？⇒いいのか・・。５７行目でnullが入るかもだから
+        //メソッドの戻り値をcode_errorに入れる
         String code_error = _validateCode(e.getCode(), code_duplicate_check_flag);
+
         if(!code_error.equals("")){
+            //errorsにcode_errorを入れる
             errors.add(code_error);
         }
 
@@ -39,6 +44,7 @@ public class EmployeeValidator {
 
     }
 
+
     private static String _validateCode(String code, Boolean code_duplicate_check_flag) {
         // 必須入力チェック
         if(code == null || code.equals("")){
@@ -46,7 +52,7 @@ public class EmployeeValidator {
         }
 
         //重複チェック
-        if(code_duplicate_check_flag){
+        if(code_duplicate_check_flag == true){
             EntityManager em = DButil.createEntityManager();
             long employees_count = (long)em.createNamedQuery("checkRegisteredCode", Long.class).setParameter("code", code).getSingleResult();
             em.close();
@@ -72,7 +78,8 @@ public class EmployeeValidator {
     private static String _validataPassword(String password, Boolean password_check_flag){
 
         //パスワードを変更する場合のみ実行
-        if(password_check_flag && (password == null || password.equals(""))){
+        //update時はnullのとき、password_check_flagはfalseになる
+        if(password_check_flag == true && (password == null || password.equals(""))){
             return "パスワードを入力してください";
         }
 
