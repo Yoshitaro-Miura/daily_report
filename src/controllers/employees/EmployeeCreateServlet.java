@@ -46,8 +46,12 @@ public class EmployeeCreateServlet extends HttpServlet {
             e.setCode(request.getParameter("code"));
             e.setName(request.getParameter("name"));
             e.setPassword(
-                    EncryptUtil.getPasswordEncrypt(request.getParameter("password"), (String)this.getServletContext().getAttribute("context"))
+                    EncryptUtil.getPasswordEncrypt(request.getParameter("password"), (String)this.getServletContext().getAttribute("pepper"))
                     );
+
+            System.out.println(e.getPassword());
+
+
             e.setAdmin_flag(Integer.parseInt(request.getParameter("admin_flag")));
 
             Timestamp currentTime = new Timestamp(System.currentTimeMillis());
