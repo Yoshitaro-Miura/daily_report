@@ -36,6 +36,7 @@ public class Report {
 
 
     //ログインしている従業員の情報をオブジェクトのまま employee フィールドに格納します
+    //これ何に使っている？employee_idの設定？？どうやってidが導き出される？
     @ManyToOne
     @JoinColumn(name = "employee_id", nullable = false)
     private Employee employee;
