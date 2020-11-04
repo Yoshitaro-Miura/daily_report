@@ -33,6 +33,13 @@ import javax.persistence.Table;
             name = "getMyReportsCount",
             query = "select count(r) FROM Report AS r where r.employee = :employee"
             )
+    /*
+    ,
+    @NamedQuery(
+            name = "getReportGoodchk",
+            query = "select count(r) FROM Report As r where r.employee = :employee and r.id = :id"
+            )
+*/
 })
 @Entity
 public class Report {
@@ -71,6 +78,17 @@ public class Report {
 
     @Column(name = "updated_at", nullable = false)
     private Timestamp updated_at;
+
+    @Column(name = "good", nullable = false)
+    private int good;
+
+    public int getGood() {
+        return good;
+    }
+
+    public void setGood(int good) {
+        this.good = good;
+    }
 
     public Integer getId() {
         return id;

@@ -110,6 +110,9 @@ public class LoginServlet extends HttpServlet {
                 rd.forward(request, response);
             } else {
                 //eの結果がjsp側で必要
+
+                //eを「login_employee」とする。
+                //eは当該コードのemployee情報
                 request.getSession().setAttribute("login_employee", e);
                 request.getSession().setAttribute("flush", "ログインしました。");
                 response.sendRedirect(request.getContextPath() + "/");

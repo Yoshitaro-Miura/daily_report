@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import models.Employee;
+import models.Good_rep_emp;
 import models.Report;
 import utils.DButil;
 
@@ -38,6 +39,7 @@ public class TopPageIndexServlet extends HttpServlet {
 
         EntityManager em = DButil.createEntityManager();
 
+        //「login_employee」をセッションから引っ張ってくる
         Employee login_employee = (Employee)request.getSession().getAttribute("login_employee");
 
         int page;
@@ -48,6 +50,8 @@ public class TopPageIndexServlet extends HttpServlet {
         }
 
         List<Report> reports = em.createNamedQuery("getMyAllReports",Report.class)
+                                //getMyAllReportsを呼ぶ、"employee"に、login_employeeを全部突っ込む
+                                //
                                 .setParameter("employee", login_employee)
                                 .setFirstResult(15 * (page -1))
                                 .setMaxResults(15)
@@ -57,11 +61,19 @@ public class TopPageIndexServlet extends HttpServlet {
                                 .setParameter("employee", login_employee)
                                 .getSingleResult();
 
+
+        List<Good_rep_emp> gre =em.createNamedQuery("getGoodChk", Good_rep_emp.class)
+                                .setParameter("employee", login_employee)
+                                .setFirstResult(15 * (page -1))
+                                .setMaxResults(15)
+                                .getResultList();
+
         em.close();
 
         request.setAttribute("reports", reports);
         request.setAttribute("reports_count", reports_count);
         request.setAttribute("page", page);
+        request.setAttribute("good_rep_emp", gre);
 
         if(request.getSession().getAttribute("flush") != null){
             request.setAttribute("flush", request.getSession().getAttribute("flush"));

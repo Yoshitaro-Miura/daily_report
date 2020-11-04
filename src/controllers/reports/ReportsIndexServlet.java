@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import models.Good_rep_emp;
 import models.Report;
 import utils.DButil;
 
@@ -55,10 +56,21 @@ public class ReportsIndexServlet extends HttpServlet {
 
         long reports_count = (long)em.createNamedQuery("getReportsCount", Long.class).getSingleResult();
 
+        //いいね判定用
+
+        List<Good_rep_emp> gre =em.createNamedQuery("getGoodChkAllemp", Good_rep_emp.class)
+                .setFirstResult(15 * (page -1))
+                .setMaxResults(15)
+                .getResultList();
+
+
+
         em.close();
 
         request.setAttribute("reports", reports);
         request.setAttribute("reports_count", reports_count);
+        request.setAttribute("good_rep_emp", gre);
+
         request.setAttribute("page", page);
         if(request.getSession().getAttribute("flush") != null){
             request.setAttribute("flush", request.getSession().getAttribute("flush"));

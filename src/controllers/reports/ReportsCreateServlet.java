@@ -48,6 +48,7 @@ public class ReportsCreateServlet extends HttpServlet {
             //<c:if test="${sessionScope.login_employee.id == report.employee.id}">
             //reportの中にemployee作ってる？
             System.out.print(request.getSession().getAttribute("login_employee"));
+
             r.setEmployee((Employee) request.getSession().getAttribute("login_employee"));
 
             Date report_date = new Date(System.currentTimeMillis());
